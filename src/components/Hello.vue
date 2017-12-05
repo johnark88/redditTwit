@@ -7,12 +7,17 @@
 </template>
 
 <script>
+import twitter from '@/components/twitter'
+import reddit from '@/components/reddit'
 export default {
   name: 'hello',
   data () {
     return {
       msg: 'This App welcomes you'
     }
+  },
+  components: {
+    reddit, twitter
   }
 }
 </script>
