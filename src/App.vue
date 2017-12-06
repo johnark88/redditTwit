@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <header>
-      <span>This App</span>
+     <a id="clickHome" href="/"><span>This App</span></a> 
     </header>
     <main>
       <img src="" alt="">
@@ -40,8 +40,13 @@ header {
   background-color: orange;
   color: #ffffff;
 }
+#clickHome {
+  text-decoration: none;
+  color: white;
+}
 
 header span {
+  
   display: block;
   position: relative;
   font-size: 20px;
