@@ -5,9 +5,9 @@
         
     <h2>New Churning Articles</h2>
     <ol id="orderedArticles">
-      <li  v-for="art in newChurningArticles"> {{art.title}} -- {{art.id}}</li>
+      <li  v-for="art in newChurningArticles"> {{art.title}} --  <button @click="getArticleComments(art.id)">{{art.id}}</button></li>
     </ol>
-    <button v-on:click="getArticleComments()"> Comments </button>
+    
   </div>
 </template>
 
@@ -18,6 +18,7 @@ export default {
   data: () => {
     return {
       newChurningArticles: [],
+      newArticleComments: [],
       title: '',
       articleId: ''
     }
@@ -47,17 +48,37 @@ export default {
         console.log('error')
       });
     },
-    
-    getArticleComments: function () {
-      console.log(this.newChurningArticles, 'new get article comments')
-      this.displayArticles = this.newChurningArticles;
-         
-    }
+    //Passed (id) based on button clicked by user
+    //axois.get comments of article based on (id)
+    //parse json - only need comments(this.body) 
+    getArticleComments: function (id) {
+      console.log(id, 'id')
+      axios.get('https://www.reddit.com/r/churning/comments/'+ id +'.json')
+      .then(response => {
+        console.log(response.data[1].data.children)
+          let fetchedArticleComments = response.data[1].data.children
+          for (var i = 0; i < fetchedArticleComments.length; i++){
+            let obj = fetchedArticleComments[i];
+            for(let key in obj){
+               this.body = obj[key].body;
+               console.log(this.body, 'body?')
+
+               if(this.body != undefined) {
+                 this.newArticleComments.push({comment: this.body})
+               }//end if
+            }//end for in
+          } //end for loop
+          console.log(this.newArticleComments, 'done')
+      }, response => {
+        console.log('error in get comments')
+      })
+    }, //ed get article comments
+
+
     //------------- TO DO ----------------
     //get comments based on article selected 
     //Future - setup to search for marriott NFL question of the week. 
-    //get sub reddit articles
-    //get the right article 
+
     //get the right comment 
     //send comment to twitter 
     //twit comment(as answer to question
