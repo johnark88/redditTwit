@@ -1,7 +1,7 @@
 <template>
   <div class="reddit">
     <h1>Reddit</h1>
-    <label for="getArticles">Get Churning Articles</label><button id="getArticles" v-on:click="">GET</button>
+    <label for="getArticles">Get Churning Articles</label><button id="getArticles" v-on:click="getChurningArticles()">GET</button>
         
     <h2>New Churning Articles</h2>
     <ol id="orderedArticles">
@@ -18,12 +18,14 @@ export default {
   data: () => {
     return {
       newChurningArticles: [],
+      title: '',
+      articleId: ''
     }
   },
-  mounted () {
-    console.log('ready')
-      this.newChurningArticles = this.getChurningArticles()
-  },
+  // mounted () {
+  //   console.log('ready')
+  //     this.newChurningArticles = this.getChurningArticles()
+  // },
   methods:  {
     // thisGoesFirst:  () =>  {
     //     console.log('goes first')
@@ -35,21 +37,20 @@ export default {
     //Get's churning subreddit *new* articles in json from reddit 
     //loop's through json to pull out article title and unique id
     //id will be used to search comments for example tweet. 
-    getChurningArticles: () => {
-      const self = this
+    getChurningArticles: function () {
       console.log('in getting articles')
-      self.newChurningArticles = []
+      this.newChurningArticles = []
       axios.get('https://www.reddit.com/r/churning/new.json')
       .then(response => {
         let fetchChurningArticles = response.data.data.children;
         for (var i = 0; i < fetchChurningArticles.length; i++) {
           let obj = fetchChurningArticles[i];
           for (let key in obj){
-            self.title = obj[key].title;
-            self.articleId = obj[key].id;  
+            this.title = obj[key].title;
+            this.articleId = obj[key].id;  
                 //pull out undefined items
-              if(self.title && self.articleId != undefined){
-                self.newChurningArticles.push({title: self.title, id: self.articleId})
+              if(this.title && this.articleId != undefined){
+                this.newChurningArticles.push({title: this.title, id: this.articleId})
             }// if
           } //for in
         } // for loop
@@ -58,7 +59,7 @@ export default {
       });
     },
     
-    getArticleComments: () => {
+    getArticleComments: function () {
       console.log(this.newChurningArticles, 'new get article comments')
       this.displayArticles = this.newChurningArticles;
          
