@@ -7,7 +7,8 @@
     <ol id="orderedArticles">
       <li  v-for="art in newChurningArticles"> {{art.title}} --  <button @click="getArticleComments(art.id)">{{art.id}}</button></li>
     </ol>
-    
+    <p> This is the comment found: </p>
+      <p v-for="comment in foundComment">{{comment.comment}}</p>
   </div>
 </template>
 
@@ -20,7 +21,8 @@ export default {
       newChurningArticles: [],
       newArticleComments: [],
       title: '',
-      articleId: ''
+      articleId: '',
+      foundComment: []
     }
   },
   methods:  {
@@ -30,7 +32,7 @@ export default {
     getChurningArticles: function () {
       console.log('in getting articles')
       this.newChurningArticles = []
-      axios.get('https://www.reddit.com/r/churning/new.json')
+      axios.get('https://www.reddit.com/r/churning/hot.json')
       .then(response => {
         let fetchChurningArticles = response.data.data.children;
         for (var i = 0; i < fetchChurningArticles.length; i++) {
@@ -52,28 +54,34 @@ export default {
     //axois.get comments of article based on (id)
     //parse json - only need comments(this.body) 
     getArticleComments: function (id) {
-      console.log(id, 'id')
       axios.get('https://www.reddit.com/r/churning/comments/'+ id +'.json')
       .then(response => {
-        console.log(response.data[1].data.children)
           let fetchedArticleComments = response.data[1].data.children
           for (var i = 0; i < fetchedArticleComments.length; i++){
             let obj = fetchedArticleComments[i];
             for(let key in obj){
                this.body = obj[key].body;
-               console.log(this.body, 'body?')
-
                if(this.body != undefined) {
                  this.newArticleComments.push({comment: this.body})
                }//end if
             }//end for in
           } //end for loop
-          console.log(this.newArticleComments, 'done')
+          this.getCommentForTwitter(id);
       }, response => {
         console.log('error in get comments')
       })
     }, //ed get article comments
-
+    getCommentForTwitter: function (id) {
+      console.log(id, 'id')
+      console.log(this.newArticleComments)
+    
+      function filterIt(arr, searchKey) {
+        return arr.filter(obj => Object.keys(obj).some(key => obj[key].includes(searchKey)));
+      }
+      this.foundComment = filterIt(this.newArticleComments, '@Marriott')
+      console.log(this.foundComment, 'found it?')
+      
+    }
 
     //------------- TO DO ----------------
     //get comments based on article selected 

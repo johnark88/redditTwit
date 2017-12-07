@@ -32,7 +32,7 @@ body {
 
 main {
   text-align: center;
-  margin-top: 40px;
+  /* margin-top: 40px; */
 }
 
 header {
@@ -47,6 +47,7 @@ header {
   color: white;
 }
 header span {
+  margin-left: 20px;
   position: relative;
   font-size: 20px;
   line-height: 1;
