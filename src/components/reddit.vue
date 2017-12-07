@@ -70,7 +70,10 @@ export default {
       }, response => {
         console.log('error in get comments')
       })
-    }, //ed get article comments
+    }, //end get article comments
+    //Takes the comments array from above and passes it to the filter function
+    //finds the correct comment based on searchKey(@Marriott)
+    //will pass this onto the twitter component
     getCommentForTwitter: function (id) {
       console.log(id, 'id')
       console.log(this.newArticleComments)
@@ -81,22 +84,19 @@ export default {
       this.foundComment = filterIt(this.newArticleComments, '@Marriott')
       console.log(this.foundComment, 'found it?')
       
-    }
+    }//end get comment
 
     //------------- TO DO ----------------
-    //get comments based on article selected 
-    //Future - setup to search for marriott NFL question of the week. 
-
-    //get the right comment 
+    
     //send comment to twitter 
     //twit comment(as answer to question
+    //Future - set up finding article to be done with out user input
     
   }// end methods
 }//export
 
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 #getArticles {
   margin: 5px;
