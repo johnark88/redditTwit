@@ -1,11 +1,11 @@
 <template>
   <div class="reddit">
     <h1>Reddit</h1>
-    <label for="getArticles">Get Churning Articles</label><button id="getArticles" v-on:click="thisGoesFirst()">GET</button>
+    <label for="getArticles">Get Churning Articles</label><button id="getArticles" v-on:click="">GET</button>
         
     <h2>New Churning Articles</h2>
     <ol id="orderedArticles">
-      <li  v-for="art in displayArticles"> {{art.title}} -- {{art.id}}</li>
+      <li  v-for="art in newChurningArticles"> {{art.title}} -- {{art.id}}</li>
     </ol>
     <button v-on:click="getArticleComments()"> Comments </button>
   </div>
@@ -18,23 +18,24 @@ export default {
   data: () => {
     return {
       newChurningArticles: [],
-      displayArticles:[],
-      msgs: [{msg: 'hello', id: 0}, {msg: 'good day', id: 1}],
-      gotArticles: false
     }
   },
+  mounted () {
+    console.log('ready')
+      this.newChurningArticles = this.getChurningArticles()
+  },
   methods:  {
-    thisGoesFirst: function ()  {
-        console.log('goes first')
-          this.getChurningArticles( (callback) => {
-            console.log('got Articles')
-            this.gotArticles = true
-          });
-    },
+    // thisGoesFirst:  () =>  {
+    //     console.log('goes first')
+    //       this.getChurningArticles( (callback) => {
+    //         console.log('got Articles')
+    //         this.gotArticles = true
+    //       });
+    // },
     //Get's churning subreddit *new* articles in json from reddit 
     //loop's through json to pull out article title and unique id
     //id will be used to search comments for example tweet. 
-    getChurningArticles: (callback) => {
+    getChurningArticles: () => {
       const self = this
       console.log('in getting articles')
       self.newChurningArticles = []
@@ -52,7 +53,6 @@ export default {
             }// if
           } //for in
         } // for loop
-          callback();
       }, response => {
         console.log('error')
       });
