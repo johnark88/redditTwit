@@ -22,18 +22,7 @@ export default {
       articleId: ''
     }
   },
-  // mounted () {
-  //   console.log('ready')
-  //     this.newChurningArticles = this.getChurningArticles()
-  // },
   methods:  {
-    // thisGoesFirst:  () =>  {
-    //     console.log('goes first')
-    //       this.getChurningArticles( (callback) => {
-    //         console.log('got Articles')
-    //         this.gotArticles = true
-    //       });
-    // },
     //Get's churning subreddit *new* articles in json from reddit 
     //loop's through json to pull out article title and unique id
     //id will be used to search comments for example tweet. 
