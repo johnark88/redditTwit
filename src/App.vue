@@ -2,6 +2,8 @@
   <div id="app">
     <header>
      <a id="clickHome" href="/"><span>This App</span></a> 
+     <a id="clickHome" href="#/twitter"><span>Twitter</span></a>
+     <a id="clickHome" href="#/reddit"><span>Reddit</span></a>
     </header>
     <main>
       <img src="" alt="">
@@ -44,16 +46,12 @@ header {
   text-decoration: none;
   color: white;
 }
-
 header span {
-  
-  display: block;
   position: relative;
   font-size: 20px;
   line-height: 1;
   letter-spacing: .02em;
   font-weight: 400;
   box-sizing: border-box;
-  padding-top: 16px;
 }
 </style>
