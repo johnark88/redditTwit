@@ -11,6 +11,8 @@
 </template>
 
 <script>
+import twitter from 'twitter'
+
 export default {
   name: 'twitter',
   data: () => {
@@ -20,10 +22,18 @@ export default {
   },
   methods: {
     postTweet: (tweetToPost) =>  {
+
       console.log('post this to twitter - ', tweetToPost)
-    }
-  }
-}
+      var client = new Twitter({
+        consumer_key: process.env.TWITTER_CONSUMER_KEY,
+        consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+        access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+        access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+      });
+
+    }//end post Tweet
+  }//end methods
+} //end export 
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
