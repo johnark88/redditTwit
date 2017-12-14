@@ -12,6 +12,9 @@
 
 <script>
 import twitter from 'twitter'
+import dotenv from 'dotenv'
+
+require('dotenv').config()
 
 export default {
   name: 'twitter',
@@ -21,16 +24,42 @@ export default {
     }
   },
   methods: {
-    postTweet: (tweetToPost) =>  {
+    postTweet: () =>  {
+        
+        const getBearerToken = require('get-twitter-bearer-token')
+        const twitter_consumer_key = process.env.TWITTER_CONSUMER_KEY;
+        const twitter_consumer_secret = process.env.TWITTER_CONSUMER_SECRET;
+        
+        getBearerToken(twitter_consumer_key, twitter_consumer_secret, (err, res) => {
+            if (err) {
+                console.log(err, 'error')
+            } else {
+                console.log(res, 'response')
+              // bearer token 
+              console.log(res.body.access_token)
+            }
+        })
+      
 
-      console.log('post this to twitter - ', tweetToPost)
-      var client = new Twitter({
-        consumer_key: process.env.TWITTER_CONSUMER_KEY,
-        consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
-        access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
-        access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
-      });
-
+      
+      
+      // let client = new twitter(secret); 
+      // console.log(client, 'client')
+      // console.log(header, 'header')
+//       var client = new Twitter({
+//   consumer_key: process.env.TWITTER_CONSUMER_KEY,
+//   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+//   bearer_token: process.env.TWITTER_BEARER_TOKEN
+// });
+      // client.post('statuses/update', {status: 'I Love Twitter'}, 
+      //   function(error, tweet, response){ 
+      //      if (error) {
+      //        console.log(error); 
+      //        } 
+      //         console.log(tweet); 
+      //         console.log(response); 
+      //   });
+        
     }//end post Tweet
   }//end methods
 } //end export 
